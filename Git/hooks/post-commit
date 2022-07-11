@@ -1,0 +1,13 @@
+#!/bin/sh
+
+commitMessage="$(git show-branch --no-name HEAD)"
+validCommitMessageRegex="^\[[A-Z]+\] [A-Z][a-z ]+\.$"
+
+if [[ ! $commitMessage =~ $validCommitMessageRegex ]]; then
+  echo "$commitMessage"
+  echo "commit message violating default commit message rules: $validCommitMessageRegex"
+  git reset head~1
+  exit 1
+fi
+
+exit 0
