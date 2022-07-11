@@ -1,0 +1,15 @@
+#!/bin/sh
+
+branch="$(git rev-parse --abbrev-ref HEAD)"
+valid_branch_regex="^(feature|bugfix|revert|hotfix)\/[a-z0-9]+$"
+
+if [ "$branch" = "main" ]; then
+  echo "You can't commit directly to master branch"
+  exit 1
+elif [[ ! $branch =~ "^(feature|bugfix|revert|hotfix)\/[a-z0-9]+(-[a-z0-9]+)*$" ]]
+then
+    echo "There is something wrong with your branch name. Branch names in this project must adhere to this contract: $valid_branch_regex. Your commit will be rejected. You should rename your branch to a valid name and try again."
+    exit 1
+fi
+
+exit 0
