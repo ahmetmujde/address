@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  db:
+    container_name: address-db
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=address_api_user
+      - POSTGRES_PASSWORD=address11223344
+      - POSTGRES_DB=address
+    ports:
+      - '8888:5432'
+    volumes:
+      - address_db:/var/lib/address-postgresql/data
+volumes:
+  address_db:
+    driver: local
