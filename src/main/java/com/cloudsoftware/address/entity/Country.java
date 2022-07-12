@@ -25,6 +25,9 @@ public class Country {
     @Column(name = "short_name", nullable = false, unique = true, length = 5)
     private String shortName;
 
+    @Column(name = "area_code", nullable = false, unique = true)
+    private Long areaCode;
+
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
@@ -37,13 +40,14 @@ public class Country {
 
     }
 
-    public Country(String name, String shortName) {
+    public Country(String name, String shortName, Long areaCode) {
         this.name = name;
         this.shortName = shortName;
+        this.areaCode = areaCode;
     }
 
-    public static Country create(String name, String shortName) {
-        return new Country(name, shortName);
+    public static Country create(String name, String shortName, Long areaCode) {
+        return new Country(name, shortName, areaCode);
     }
 
     public Long getId() {
@@ -71,6 +75,16 @@ public class Country {
     public void setShortName(String shortName) {
         if (Objects.nonNull(shortName)) {
             this.shortName = shortName;
+        }
+    }
+
+    public Long getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(Long areaCode) {
+        if (Objects.nonNull(areaCode)) {
+            this.areaCode = areaCode;
         }
     }
 
