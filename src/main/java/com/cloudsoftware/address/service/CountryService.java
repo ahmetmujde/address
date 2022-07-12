@@ -40,8 +40,9 @@ public class CountryService {
     public Country create(CreateCountryRequest createCountryRequest) {
         String name = createCountryRequest.getName();
         String shortName = createCountryRequest.getShortName();
+        Long areaCode = createCountryRequest.getAreaCode();
 
-        Country country = Country.create(name, shortName);
+        Country country = Country.create(name, shortName, areaCode);
 
         validateCountryInformationIsUnique(country);
 
@@ -51,10 +52,12 @@ public class CountryService {
     public void updateById(Long id, UpdateCountryRequest updateCountryRequest) {
         String name = updateCountryRequest.getName();
         String shortName = updateCountryRequest.getShortName();
+        Long areaCode = updateCountryRequest.getAreaCode();
 
         Country country = getCountryById(id);
         country.setName(name);
         country.setShortName(shortName);
+        country.setAreaCode(areaCode);
         country.setUpdatedDate(new Date());
 
         validateCountryInformationIsUnique(country);
@@ -64,8 +67,8 @@ public class CountryService {
 
     private void validateCountryInformationIsUnique(Country country) {
         boolean countryPropertySame = isCreateOperation(country) ?
-                countryRepository.isCountryInformationUnique(country.getName(), country.getShortName()) :
-                countryRepository.isCountryInformationUnique(country.getId(), country.getName(), country.getShortName());
+                countryRepository.isCountryInformationUnique(country.getName(), country.getShortName(), country.getAreaCode()) :
+                countryRepository.isCountryInformationUnique(country.getId(), country.getName(), country.getShortName(), country.getAreaCode());
 
         if (countryPropertySame) {
             throw new CountryAlreadyExistException();
