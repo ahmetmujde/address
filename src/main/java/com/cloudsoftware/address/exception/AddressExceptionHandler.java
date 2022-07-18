@@ -1,6 +1,7 @@
 package com.cloudsoftware.address.exception;
 
 import com.cloudsoftware.address.dto.response.ErrorResponse;
+import com.cloudsoftware.address.exception.customexception.CityAlreadyExistException;
 import com.cloudsoftware.address.exception.customexception.CountryAlreadyExistException;
 import com.cloudsoftware.address.exception.customexception.CountryNotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -22,5 +23,11 @@ public class AddressExceptionHandler {
     public ResponseEntity<ErrorResponse> handeCountryNotFoundException(CountryNotFoundException exception) {
         ErrorResponse errorResponse = ErrorResponse.create(exception.getMessage());
         return ResponseEntity.of(Optional.of(errorResponse));
+    }
+
+    @ExceptionHandler(value = {CityAlreadyExistException.class})
+    public ResponseEntity<ErrorResponse> handeCityAlreadyExistException(CityAlreadyExistException exception){
+        ErrorResponse errorResponse = ErrorResponse.create(exception.getMessage());
+        return  ResponseEntity.of(Optional.of(errorResponse));
     }
 }
